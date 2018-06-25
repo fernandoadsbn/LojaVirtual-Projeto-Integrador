@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+	<h:form
+		style="border-style: ridge;  margin-right: 120px; margin-left: 120px;">
+		<br/>
+		<p:fieldset legend="Produtos">
+			<p:inputText value="#{produtoCtrl.filtro}"
+				placeholder="Pesquisar Nome Produto">
+				<p:ajax event="keyup" update="tbl" />
+			</p:inputText>
+			<p:spacer width="5" height="10" />
+			<p:dataTable
+				emptyMessage="Nenhum Produto Encontrado com esses Dados!" id="tbl"
+				var="produto" value="#{produtoCtrl.listagem}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="20" style="margin-bottom:20px">
+
+				<f:facet name="{Exporters}">
+					<p:spacer width="20" height="10" />
+					<p:spacer width="160" height="10" />
+					<p:outputLabel value="Exportar " />
+					<h:commandLink ajax="false">
+						<p:graphicImage value="../resources/images/excel.png" width="24" />
+						<p:dataExporter type="xls" target="tbl" fileName="produtos" />
+					</h:commandLink>
+
+					<h:commandLink ajax="false">
+						<p:graphicImage value="../resources/images/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="tbl" fileName="produtos" />
+					</h:commandLink>
+
+					<h:commandLink ajax="false">
+						<p:graphicImage value="../resources/images/csv.png" width="24" />
+						<p:dataExporter type="csv" target="tbl" fileName="produtos" />
+					</h:commandLink>
+
+					<h:commandLink ajax="false">
+						<p:graphicImage value="../resources/images/xml.png" width="24" />
+						<p:dataExporter type="xml" target="tbl" fileName="produtos" />
+					</h:commandLink>
+				</f:facet>
+
+				<p:column filterBy="#{produto.id}" headerText="Id"
+					filterMatchMode="contains">
+					<h:outputText value="#{produto.id}" />
+				</p:column>
+
+				<p:column filterBy="#{produto.nome}" headerText="Nome"
+					filterMatchMode="contains">
+					<h:outputText value="#{produto.nome}" />
+				</p:column>
+
+				<p:column filterBy="#{produto.preco}" headerText="Preço"
+					filterMatchMode="contains">
+					<h:outputText value="#{produto.preco}" />
+				</p:column>
+
+				<p:column width="24">
+					<center>
+						<p:commandLink title="Editar"
+							action="#{produtoCtrl.actionAlterar(produto)}" update="tbl">
+							<p:graphicImage value="../resources/images/editar.png" width="24" />
+						</p:commandLink>
+					</center>
+				</p:column>
+				<p:column width="24">
+					<center>
+						<p:commandLink title="Excluir"
+							action="#{produtoCtrl.actionExcluir(produto)}" update="tbl">
+							<p:graphicImage value="../resources/images/excluir.png" width="24" />
+						</p:commandLink>
+					</center>
+				</p:column>
+
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
+	</ui:composition>
+</h:body>
+</html>

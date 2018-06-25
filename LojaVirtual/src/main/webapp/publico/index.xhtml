@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+		<h:form
+			style="border-style: ridge;  margin-right: 120px; margin-left: 120px;"
+			id="data">
+			<p:growl id="msgcarrinho" life="2000" />
+			<br />
+			<div>
+				<p:fieldset legend="Home">
+					<p:dataGrid var="produto" value="#{produtoCtrl.listagem}"
+						columns="3" layout="grid" rows="12" paginator="true" id="produto"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="6,12,16">
+
+						<f:facet name="header">
+           Produtos a Venda
+        </f:facet>
+
+						<p:panel header="#{produto.nome}" style="text-align:center">
+							<h:panelGrid columns="1" style="width:100%">
+								<p:graphicImage
+									value="../resources/produto-images/#{produto.url_image}"
+									height="200" width="200" />
+
+								<h:outputText value="R$#{produto.preco}" />
+
+								<p:commandLink oncomplete="PF('proDialog').show()"
+									title="View Detail" update="data">
+									<h:outputText styleClass="ui-icon ui-icon-search"
+										style="margin:0 auto;" />
+									<f:setPropertyActionListener value="#{produto}"
+										target="#{produtoCtrl.produto}" />
+								</p:commandLink>
+							</h:panelGrid>
+						</p:panel>
+
+					</p:dataGrid>
+
+					<p:dialog header="Informação do Produto" widgetVar="proDialog"
+						modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="proDetail" style="text-align:center;" >
+							<p:panelGrid columns="2"
+								rendered="#{not empty produtoCtrl.listagem}"
+								columnClasses="label,value">
+								<f:facet name="header">
+									<p:graphicImage
+										value="../resources/produto-images/#{produtoCtrl.produto.url_image}"
+										height="200" width="200" />
+								</f:facet>
+
+								<h:outputText value="Nome:" />
+								<h:outputText value="#{produtoCtrl.produto.nome}" />
+								<h:outputText value="Preço:" />
+								<h:outputText value="$#{produtoCtrl.produto.preco}" />
+								<h:outputText value="Add Carrinho:" />
+								<p:commandLink action="#{carrinhoCtrl.addCarrinho(produtoCtrl.produto)}" update="msgcarrinho">
+									<p:graphicImage value="../resources/images/cart-add-icon.png"
+										height="50" width="50" />
+								</p:commandLink>
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+				</p:fieldset>
+			</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

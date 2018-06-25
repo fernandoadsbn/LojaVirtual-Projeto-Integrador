@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+		<h:form
+			style="border-style: ridge;  margin-right: 120px; margin-left: 120px;">
+
+			<br />
+
+			<div>
+				<p:fieldset legend="Usuários">
+
+					<p:dataTable
+						emptyMessage="Nenhum Perfil Encontrado com esses Dados!" id="tbl"
+						var="pessoa" value="#{pessoaCtrl.listagem}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="20" style="margin-bottom:20px">
+
+						<p:column headerText="Id" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.id}" />
+						</p:column>
+
+						<p:column headerText="Nome" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.nome}" />
+						</p:column>
+
+						<p:column headerText="CPF" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.cpf}" />
+						</p:column>
+
+						<p:column headerText="RG" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.rg}" />
+						</p:column>
+
+						<p:column headerText="Data de Nascimento"
+							filterMatchMode="contains">
+							<h:outputText value="#{pessoa.data_nascimento}" />
+						</p:column>
+
+						<p:column headerText="Rua" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.rua}" />
+						</p:column>
+
+						<p:column headerText="Bairro" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.bairro}" />
+						</p:column>
+
+						<p:column headerText="Cidade" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.cidade}" />
+						</p:column>
+
+						<p:column headerText="UF" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.uf}" />
+						</p:column>
+
+						<p:column headerText="CEP" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.cep}" />
+						</p:column>
+
+						<p:column headerText="Email" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.email}" />
+						</p:column>
+
+						<p:column headerText="Senha" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.senha}" />
+						</p:column>
+
+						<p:column headerText="Usuário" filterMatchMode="contains">
+							<h:outputText value="#{pessoa.usuario}" />
+						</p:column>
+
+						<p:column width="24">
+							<center>
+								<p:commandLink title="Editar" update="tbl"
+									action="#{pessoaCtrl.actionAlterar(pessoa)}">
+									<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaCtrl.pessoa}" />
+									<p:graphicImage value="../resources/images/editar.png"
+										width="24" />
+								</p:commandLink>
+							</center>
+						</p:column>
+						<p:column width="24">
+							<center>
+								<p:commandLink title="Excluir" update="tbl"
+									action="#{pessoaCtrl.actionExcluir(pessoa)}">
+									<p:graphicImage value="../resources/images/excluir.png"
+										width="24" />
+								</p:commandLink>
+							</center>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+			</div>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

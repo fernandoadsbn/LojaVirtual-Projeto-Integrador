@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+		<h:form id="data"
+			style="border-style: ridge;  margin-right: 120px; margin-left: 120px;">
+			<br />
+			<p:growl id="msgcarrinho" life="2000" />
+			<div>
+				<p:fieldset legend="Carrinho">
+					<p:dataGrid var="produto" value="#{carrinhoCtrl.listaProduto}"
+						columns="3" layout="grid" rows="12" paginator="true" id="produto"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="6,12,16">
+
+						<f:facet name="header">
+           						Produtos do Carrinho
+						<p:spacer width="30" height="10" />
+							<p:spacer width="30" height="10" />
+							<p:outputLabel value="Valor Total: " />
+							<p:outputLabel value="R$#{carrinhoCtrl.somaSubTotal}" />
+						</f:facet>
+
+						<p:panel header="#{produto.nome}" style="text-align:center">
+							<h:panelGrid columns="1" style="width:100%">
+								<p:graphicImage
+									value="../resources/produto-images/#{produto.url_image}"
+									height="200" width="200" />
+
+								<h:outputText value="#{produto.preco}" />
+
+								<p:commandLink oncomplete="PF('proDialog').show()"
+									title="View Detail" update="data">
+									<h:outputText styleClass="ui-icon ui-icon-search"
+										style="margin:0 auto;" />
+									<f:setPropertyActionListener value="#{produto}"
+										target="#{produtoCtrl.produto}" />
+								</p:commandLink>
+							</h:panelGrid>
+						</p:panel>
+					</p:dataGrid>
+
+					<p:dialog header="Informação do Carrinho(Produto)"
+						widgetVar="proDialog" modal="true" showEffect="fade"
+						hideEffect="fade" resizable="false">
+						<p:outputPanel id="proDetail" style="text-align:center;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty produtoCtrl.listagem}"
+								columnClasses="label,value">
+								<f:facet name="header">
+									<p:graphicImage
+										value="../resources/produto-images/#{produtoCtrl.produto.url_image}"
+										height="200" width="200" />
+								</f:facet>
+
+								<h:outputText value="Nome:" />
+								<h:outputText value="#{produtoCtrl.produto.nome}" />
+								<h:outputText value="Preço:" />
+								<h:outputText value="$#{produtoCtrl.produto.preco}" />
+								<h:outputText value="Remover Carrinho:" />
+								<p:commandLink
+									action="#{carrinhoCtrl.removeCarrinho(produtoCtrl.produto)}"
+									update="msgcarrinho produto">
+									<p:graphicImage
+										value="../resources/images/cart-remove-icon.png" height="50"
+										width="50" />
+								</p:commandLink>
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+
+					<p:dataTable id="tbl" var="f" value="#{carrinhoCtrl.listagem}"
+						paginaTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+               {PageLinks} {NextPageLink} {LastPagelink}"
+						paginator="false" rows="10" style="margin-bottom:20px">
+						<f:facet name="header">
+							<h:outputLabel value="Escolha a forma de Pagamento" />
+							<p:spacer width="30" height="10" />
+						</f:facet>
+						<p:column headerText="Descrição" sortBy="#{f.descricao}">
+							<h:outputText value="#{f.descricao}" />
+						</p:column>
+						<p:column headerText="Nº Max.Parc" sortBy="#{f.numMaxParc}">
+							<h:outputText value="#{f.numMaxParc}" />
+						</p:column>
+
+						<p:column headerText="Nº de Parcelas" sortBy="#{f.numMaxParc}">
+							<p:selectOneMenu id="console" value="#{f}" style="width:125px">
+								<f:selectItem itemLabel="Selecione para Liberar"/>
+								<f:selectItems value="#{carrinhoCtrl.listaParcelas}" var="qtd"
+									itemValue="#{qtd}" itemLabel="#{qtd.intValue()}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="Escolher Tipo"
+							style="widht:32px;text-align: center">
+							<p:commandButton title="Escolher"
+								action="#{carrinhoCtrl.actionTipodePgt(f)}" update="console">
+								<f:setPropertyActionListener value="#{f}"
+									target="#{carrinhoCtrl.formaDePagamento}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<p:commandButton value="Finalizar Pedido" icon="icon-novo"
+						action="#{carrinhoCtrl.actionPedido}" update="msgcarrinho" />
+				</p:fieldset>
+			</div>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

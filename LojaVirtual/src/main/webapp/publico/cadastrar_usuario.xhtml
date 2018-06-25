@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+		<h:form
+			style="border-style: ridge;  margin-right: 120px; margin-left: 120px;"
+			id="data">
+			<br />
+			<div>
+				<p:fieldset legend="Cadastrar Conta">
+					<p:panelGrid columns="2">
+
+						<p:outputLabel value="Nome:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" />
+
+						<p:outputLabel for="rg" value="RG:" />
+						<p:inputMask mask="9.999.999" value="#{pessoaCtrl.pessoa.rg}"
+							id="rg" size="20" />
+
+						<p:outputLabel for="cpf" value="CPF:" />
+						<p:inputMask mask="999.999.999-99" id="cpf"
+							value="#{pessoaCtrl.pessoa.cpf}" size="14" />
+
+						<p:outputLabel id="datanascimento" value="Data de Nascimento:"
+							for="dataentrada" style="float: right;" />
+
+						<p:calendar id="dataentrada" locale="pt" size="12"
+							mask="99/99/9999" showOn="button" timeZone="GMT-3"
+							pattern="dd/MM/yyyy" value="#{pessoaCtrl.pessoa.data_nascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+								timeStyle="medium" timeZone="GMT-3" for="data" />
+						</p:calendar>
+
+						<p:outputLabel value="Rua:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" />
+
+						<p:outputLabel value="Bairro:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" />
+
+						<p:outputLabel value="Cidade:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.cidade}" />
+
+						<p:outputLabel for="cep" value="CEP:" />
+						<p:inputMask mask="99999999" value="#{pessoaCtrl.pessoa.cep}"
+							id="cep" size="8" />
+
+						<p:outputLabel for="uf" value="Uf:" />
+						<p:inputMask mask="aa" value="#{pessoaCtrl.pessoa.uf}" id="uf"
+							size="2" />
+
+						<p:outputLabel value="Usuário:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.usuario}" size="32" />
+
+						<p:outputLabel value="Senha:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.senha}" type="password"
+							size="32" />
+
+						<p:outputLabel value="Email:" />
+						<p:inputText value="#{pessoaCtrl.pessoa.email}" size="40" />
+
+					</p:panelGrid>
+
+					<p:dataTable value="#{pessoaCtrl.pessoa.fones}" var="fone"
+						rules="rows" id="tabelaFone">
+
+						<f:facet name="header">
+							<p:commandButton value="Adicionar Fone"
+								action="#{pessoaCtrl.actionInserirFone}" update="tabelaFone" />
+						</f:facet>
+						<p:column>
+							<f:facet name="header">
+								<p:outputLabel value="Numero" />
+							</f:facet>
+							<p:inputText value="#{fone.numero}" size="20" maxlength="20" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<p:outputLabel value="Descrição" />
+							</f:facet>
+							<p:inputText value="#{fone.descricao}" size="30" maxlength="30" />
+						</p:column>
+						<p:column>
+							<p:commandLink value="Excluir"
+								action="#{pessoaCtrl.actionExcluirFone(fone)}"
+								update="tabelaFone" />
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:growl id="growl2" life="2000" />
+					<p:commandButton value="Cadastrar" styleClass="ui-priority-primary"
+						update="growl2 data" action="#{pessoaCtrl.actionGravar}" />
+
+				</p:fieldset>
+			</div>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

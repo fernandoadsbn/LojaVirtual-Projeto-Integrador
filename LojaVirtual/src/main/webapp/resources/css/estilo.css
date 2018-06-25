@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+body {
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0px;
+	font-weight: normal
+}
+
+header {
+	height: 100px;
+	background-color: #545454;
+	color: #fff;
+	box-shadow: 0px 2px 2px #ccc
+}
+
+.header {
+	height: 100px;
+}
+
+#conteudo {
+	padding: 0px 8px
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: 500;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 10px
+}
+
+.bordaperfil{
+	
+	border: 2px solid red;
+    border-radius: 5px;
+	
+}

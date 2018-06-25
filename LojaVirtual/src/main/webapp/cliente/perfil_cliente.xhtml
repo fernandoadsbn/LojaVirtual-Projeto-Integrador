@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+	<ui:composition template="/template/template.xhtml">
+		<h:form id="data"
+			style="border-style: ridge;  margin-right: 120px; margin-left: 120px;">
+			<br />
+			<div>
+				<p:fieldset legend="Perfil">
+					<p:repeat value="#{usuarioCtrl.listagemP}" var="usuario">
+
+						<h:panelGrid columns="2" border="2" width="100%"
+							style="font-size:20px;">
+							
+							<h:outputText value="Nome:" />
+							<h:outputText value="#{usuario.nome}" style="font-weight: bold;" />
+
+							<h:outputText value="Email:" />
+							<h:outputText value="#{usuario.email}" style="font-weight: bold" />
+
+							<h:outputText value="Senha:" />
+							<h:outputText value="#{usuario.senha}" style="font-weight: bold" />
+
+							<h:outputText value="CPF:" />
+							<h:outputText value="#{usuario.cpf}" style="font-weight: bold" />
+
+							<h:outputText value="RG:" />
+							<h:outputText value="#{usuario.rg}" style="font-weight: bold" />
+
+							<h:outputText value="Data de Nascimento:" />
+							<h:outputText value="#{usuario.data_nascimento}"
+								style="font-weight: bold">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+							<h:outputText value="Rua:" />
+							<h:outputText value="#{usuario.rua}" style="font-weight: bold" />
+
+							<h:outputText value="Bairro:" />
+							<h:outputText value="#{usuario.bairro}" style="font-weight: bold" />
+
+							<h:outputText value="Cidade:" />
+							<h:outputText value="#{usuario.cidade}" style="font-weight: bold" />
+
+							<h:outputText value="UF:" />
+							<h:outputText value="#{usuario.uf}" style="font-weight: bold" />
+
+							<h:outputText value="CEP:" />
+							<h:outputText value="#{usuario.cep}" style="font-weight: bold" />
+						</h:panelGrid>
+					</p:repeat>
+				</p:fieldset>
+			</div>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>
